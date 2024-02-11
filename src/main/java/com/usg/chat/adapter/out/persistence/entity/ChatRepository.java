@@ -1,6 +1,6 @@
 package com.usg.chat.adapter.out.persistence.entity;
 
-import org.hibernate.type.descriptor.converter.spi.JpaAttributeConverter;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public class ChatRepository{
+public interface ChatRepository extends JpaRepository<ChatEntity, Long> {
 }
