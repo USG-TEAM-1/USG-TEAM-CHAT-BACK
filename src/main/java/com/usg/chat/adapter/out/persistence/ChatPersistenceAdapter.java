@@ -7,6 +7,9 @@ import com.usg.chat.domain.Chat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class ChatPersistenceAdapter implements ChatPersistencePort{
@@ -25,4 +28,13 @@ public class ChatPersistenceAdapter implements ChatPersistencePort{
         chatRepository.save(chatEntity);
     }
 
+    @Override
+    public List<Chat> getMessageHistory(String senderId, String receiverId) {
+        List<ChatEntity> chatEntities = chatRepository.getMessageHistory(senderId, receiverId);
+        return chatEntities.stream().map(entity -> Chat.builder()
+                .message(entity.getMessage())
+                .senderId(entity.getSenderId())
+                .receiverId(entity.getReceiverId())
+                .build()).collect(Collectors.toList());
+    }
 }
