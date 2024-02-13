@@ -5,6 +5,6 @@ import com.usg.chat.domain.Chat;
 import java.util.List;
 
 public interface ChatPersistencePort {
-    void saveChat(Chat chat);
+    void sendMessage(Chat chat);
     List<Chat> getMessageHistory(String senderId, String receiverId);
 }
