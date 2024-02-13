@@ -22,7 +22,7 @@ public class ChatService implements SendMessageUseCase{
     @Override
     @Transactional
     public void sendMessage(Chat chat){
-        chatPersistencePort.saveChat(chat);
+        chatPersistencePort.sendMessage(chat);
         log.info("Message sent: {}", chat);
     }
 }
