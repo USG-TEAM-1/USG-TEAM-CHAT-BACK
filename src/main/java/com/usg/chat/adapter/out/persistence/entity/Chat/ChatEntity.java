@@ -1,31 +1,37 @@
-package com.usg.chat.domain;
+package com.usg.chat.adapter.out.persistence.entity.Chat;
 
-import lombok.AccessLevel;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collector;
 
+@Entity
+@Table (name = "chat")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Chat {
+@NoArgsConstructor
+public class ChatEntity {
 
+    @Id @GeneratedValue
+    @Column(name ="chat_id")
+    private Long id;
     private String message;     //메시지 내용
     private String senderId;   //보내는 자 아이디
     private String receiverId; //받는 자 아이디
     private LocalDateTime timestamp; //시간
 
-    //private Long chatroom;  //채팅방
+//    @OneToOne
+//    private ChatRoomEntity chatroom;  //채팅방
 
     @Builder
-    public Chat(String message, String senderId, String receiverId, LocalDateTime timestamp/*채팅방 넣는거 추가*/){
+    public ChatEntity(String message, String senderId, String receiverId,
+                      LocalDateTime timestamp/*, ChatRoomEntity chatroom*/){
         this.message = message;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.timestamp = timestamp;
         //this.chatroom = chatroom;
     }
+
 }
