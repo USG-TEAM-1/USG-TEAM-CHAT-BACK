@@ -1,7 +1,7 @@
 package com.usg.chat.application.service;
 
-import com.usg.chat.application.port.in.SendMessageCommand;
-import com.usg.chat.application.port.in.SendMessageUseCase;
+import com.usg.chat.application.port.in.Message.SaveChatCommand;
+import com.usg.chat.application.port.in.Message.SaveChatUseCase;
 import com.usg.chat.application.port.out.ChatPersistencePort;
 import com.usg.chat.domain.Chat;
 import lombok.RequiredArgsConstructor;
@@ -9,20 +9,30 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-@Slf4j
 @Service
+@Slf4j
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
-public class ChatService implements SendMessageUseCase{
+@Transactional
+public class ChatService implements SaveChatUseCase {
 
     private final ChatPersistencePort chatPersistencePort;
 
     @Override
     @Transactional
-    public void sendMessage(Chat chat){
-        chatPersistencePort.sendMessage(chat);
-        log.info("Message sent: {}", chat);
+    public Long saveMessage(SaveChatCommand command){
+        Chat chat = commandToChat(command);
+        Long savedChatId = chatPersistencePort.saveMessage(chat);
+
+        return savedChatId;
+    }
+
+    private Chat commandToChat(SaveChatCommand command){
+        return Chat
+                .builder()
+                .message(command.getMessage())
+                .receiverId(command.getReceiverId())
+                .senderId(command.getSenderId())
+                .timestamp(command.getTimestamp())
+                .build();
     }
 }
