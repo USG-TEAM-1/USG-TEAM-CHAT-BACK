@@ -1,24 +1,25 @@
 package com.usg.chat.adapter.in.web.dto;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+import java.time.LocalDateTime;
+
+@Data
 @NoArgsConstructor
-public class MessageRequest {
+public class MessageDTO {
 
     private String message;
     private String senderId;
     private String receiverId;
+    private LocalDateTime timestamp;
 
     @Builder
-    public MessageRequest(String message, String senderId, String receiverId){
+    public MessageDTO (String message, String senderId, String receiverId, LocalDateTime timestamp){
         this.message = message;
         this.senderId = senderId;
         this.receiverId = receiverId;
+        this.timestamp = timestamp;
     }
-
 }
