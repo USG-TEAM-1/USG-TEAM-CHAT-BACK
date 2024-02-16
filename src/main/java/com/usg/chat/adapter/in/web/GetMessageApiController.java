@@ -19,8 +19,8 @@ public class GetMessageApiController {
     private final GetMessageHistoryUseCase getMessageHistoryUseCase;
 
     @GetMapping("/messages")
-    public ResponseEntity<Result<List<Chat>>> getMessages(@RequestParam String senderId,
-                                                          @RequestParam String receiverId){
+    public ResponseEntity<Result<List<Chat>>> getMessages(@RequestParam Long senderId,
+                                                          @RequestParam Long receiverId){
         List<Chat> Messages = getMessageHistoryUseCase.getMessages(senderId,receiverId);
         return ResponseEntity.ok(new Result(Messages));
     }

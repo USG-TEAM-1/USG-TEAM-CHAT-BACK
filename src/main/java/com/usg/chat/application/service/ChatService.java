@@ -1,5 +1,6 @@
 package com.usg.chat.application.service;
 
+import com.usg.chat.adapter.out.persistence.entity.Chat.ChatEntity;
 import com.usg.chat.application.port.in.Message.SaveChatCommand;
 import com.usg.chat.application.port.in.Message.SaveChatUseCase;
 import com.usg.chat.application.port.out.ChatPersistencePort;
@@ -20,14 +21,14 @@ public class ChatService implements SaveChatUseCase {
     @Override
     @Transactional
     public Long saveMessage(SaveChatCommand command){
-        Chat chat = commandToChat(command);
+        ChatEntity chat = commandToChat(command);
         Long savedChatId = chatPersistencePort.saveMessage(chat);
 
         return savedChatId;
     }
 
-    private Chat commandToChat(SaveChatCommand command){
-        return Chat
+    private ChatEntity commandToChat(SaveChatCommand command){
+        return ChatEntity
                 .builder()
                 .message(command.getMessage())
                 .receiverId(command.getReceiverId())

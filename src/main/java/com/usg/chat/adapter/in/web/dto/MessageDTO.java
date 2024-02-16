@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 public class MessageDTO {
 
     private String message;
-    private String senderId;
-    private String receiverId;
+    private Long senderId;
+    private Long receiverId;
     private LocalDateTime timestamp;
 
     @Builder
-    public MessageDTO (String message, String senderId, String receiverId, LocalDateTime timestamp){
+    public MessageDTO (String message, Long senderId, Long receiverId, LocalDateTime timestamp){
         this.message = message;
         this.senderId = senderId;
         this.receiverId = receiverId;

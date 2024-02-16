@@ -15,10 +15,10 @@ public class MemberEntity {
     @Column(name ="member-id")
     private Long id;
 
-    private String userid;
+    private String email;
 
     @Builder
-    public MemberEntity(String userid){
-        this.userid = userid;
+    public MemberEntity(String email){
+        this.email = email;
     }
 }

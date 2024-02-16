@@ -10,8 +10,8 @@ public class InitDB {
     @Bean
     CommandLineRunner initDatabase(MemberRepository memberRepository) {
         return args -> {
-            memberRepository.save(new MemberEntity("user1"));
-            memberRepository.save(new MemberEntity("user2"));
+            memberRepository.save(new MemberEntity("1"));
+            memberRepository.save(new MemberEntity("2"));
         };
     }
 }

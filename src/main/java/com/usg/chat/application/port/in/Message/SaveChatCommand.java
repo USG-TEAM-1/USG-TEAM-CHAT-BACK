@@ -9,19 +9,19 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class SaveChatCommand {
-    private String senderId;
-    private String receiverId;
+    private Long senderId;
+    private Long receiverId;
     private String message;
     private LocalDateTime timestamp;
-    //private ChatRoom chatroom;
+    private ChatRoom chatroom;
 
     @Builder
-    public SaveChatCommand(String message, String senderId, String receiverId, LocalDateTime timestamp/*, ChatRoom chatroom*/){
+    public SaveChatCommand(String message, Long senderId, Long receiverId, LocalDateTime timestamp, ChatRoom chatroom){
         this.message = message;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.timestamp = timestamp;
-        //this.chatroom = chatroom;
+        this.chatroom = chatroom;
     }
 
 }

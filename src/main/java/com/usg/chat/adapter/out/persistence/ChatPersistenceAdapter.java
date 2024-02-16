@@ -17,13 +17,13 @@ public class ChatPersistenceAdapter implements ChatPersistencePort {
     private final ChatRepository chatRepository;
 
     @Override
-    public Long saveMessage(Chat chat){
+    public Long saveMessage(ChatEntity chat){
         ChatEntity chatEntity = ChatEntity
                 .builder()
                 .message(chat.getMessage())
                 .senderId(chat.getSenderId())
                 .receiverId(chat.getReceiverId())
-                //.chatroom()
+                .chatroom(chat.getChatroom())
                 .timestamp(chat.getTimestamp())
                 .build();
 
@@ -33,7 +33,7 @@ public class ChatPersistenceAdapter implements ChatPersistencePort {
     }
 
     @Override
-    public List<Chat> getMessages(String senderId, String receiverId) {
+    public List<Chat> getMessages(Long senderId, Long receiverId) {
         List<ChatEntity> chatEntities = chatRepository.getMessages(senderId,receiverId);
         return chatEntities.stream().map(entity -> Chat.builder()
                 .message(entity.getMessage())
