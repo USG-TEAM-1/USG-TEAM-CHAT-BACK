@@ -1,19 +1,18 @@
 package com.usg.chat.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class ChatRoom {
-
     private String senderAndReceiver;
 
-    @Builder
-    public ChatRoom(String senderAndReceiver){
+    public ChatRoom(String senderAndReceiver) {
         this.senderAndReceiver = senderAndReceiver;
     }
 
+    public void setSenderAndReceiver(int senderId, int receiverId) {
+        this.senderAndReceiver = senderId + "_" + receiverId;
+    }
 }
