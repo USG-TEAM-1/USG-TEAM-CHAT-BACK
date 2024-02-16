@@ -1,5 +1,6 @@
 package com.usg.chat.adapter.out.persistence.entity.Chat;
 
+import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,8 +22,8 @@ public class ChatEntity {
     private String receiverId; //받는 자 아이디
     private LocalDateTime timestamp; //시간
 
-//    @OneToOne
-//    private ChatRoomEntity chatroom;  //채팅방
+    @ManyToOne
+    private ChatRoomEntity chatroom;
 
     @Builder
     public ChatEntity(String message, String senderId, String receiverId,

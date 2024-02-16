@@ -1,24 +1,21 @@
 package com.usg.chat.adapter.out.persistence.entity.ChatRoom;
 
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 @Getter
-@Table(name = "chatroom")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class ChatRoomEntity {
-
-    @Id @GeneratedValue
-    @Column(name = "chat_room_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String SenderAndReceiver;
-
-    @Builder
-    public ChatRoomEntity(String SenderAndReceiver) {
-        this.SenderAndReceiver = SenderAndReceiver;
-    }
+    private String senderAndReceiver;
 }
