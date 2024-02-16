@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
@@ -23,13 +24,12 @@ public class ChatMessageController {
     private final SaveChatUseCase saveChatUseCase;
 
     @MessageMapping("/chat")
+    @SendTo("/queue/messages")
     public ResponseEntity<Result> sendChat(@Payload MessageDTO message) {
         message.setTimestamp(LocalDateTime.now());  //메시지 전송 시간 설정
 
-        messagingTemplate.convertAndSendToUser(
-                message.getReceiverId().toString(),
-                "/queue/messages",
-                message);
+        messagingTemplate.convertAndSendToUser(message.getReceiverId().toString(),
+                "/queue/messages", message);
 
         SaveChatCommand command = SaveChatCommand.builder()
                 .message(message.getMessage())
@@ -42,6 +42,6 @@ public class ChatMessageController {
 
         log.info("메시지 전송 완료: {}",message);
         log.info("메시지 저장 완료: {}", savedChatId);
-        return ResponseEntity.ok(new Result(message,"메시지 전송 완료"));
+        return ResponseEntity.ok(new Result(message));
     }
 }
