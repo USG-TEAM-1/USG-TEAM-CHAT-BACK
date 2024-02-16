@@ -1,14 +1,11 @@
 package com.usg.chat.application.port.out;
 
-import com.usg.chat.domain.Chat;
+import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomEntity;
+import com.usg.chat.domain.ChatRoom;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface ChatRoomPersistencePort {
-    List<Chat> getAllChats();
-    Chat getChatById(String chatId);
-    void saveChat(Chat chat);
-    void deleteChat(String chatId);
+    Long createChatRoom(ChatRoom chatRoom);
+    ChatRoomEntity findBySenderAndReceiver(Long senderId, Long receiverId);
 }
