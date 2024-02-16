@@ -1,36 +1,48 @@
 package com.usg.chat.adapter.out.persistence;
 
+import com.usg.chat.adapter.out.api.util.SortedStringEditor;
+import com.usg.chat.adapter.out.persistence.entity.Chat.ChatEntity;
+import com.usg.chat.adapter.out.persistence.entity.Chat.ChatRepository;
+import com.usg.chat.adapter.out.persistence.entity.Chat.MemberEntity;
+import com.usg.chat.adapter.out.persistence.entity.Chat.MemberRepository;
 import com.usg.chat.application.port.in.ChatRoom.ChatRoomUseCase;
+import com.usg.chat.application.port.out.ChatRoomPersistencePort;
 import com.usg.chat.domain.ChatRoom;
 import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomEntity;
 import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ChatRoomPersistenceAdapter implements ChatRoomUseCase {
+@RequiredArgsConstructor
+public class ChatRoomPersistenceAdapter implements ChatRoomPersistencePort {
     private final ChatRoomRepository chatRoomRepository;
+    private final MemberRepository memberRepository;
 
-    public ChatRoomPersistenceAdapter(ChatRoomRepository chatRoomRepository) {
-        this.chatRoomRepository = chatRoomRepository;
+    @Override
+    public Long createChatRoom(ChatRoom chatRoom){
+        ChatRoomEntity chatRoomEntity = ChatRoomEntity
+                .builder()
+                .build();
+
+        ChatRoomEntity savedChatRoomEntity = chatRoomRepository.save(chatRoomEntity);
+        return savedChatRoomEntity.getId();
     }
 
     @Override
-    public void createChatRoom(String senderAndReceiver) {
+    public ChatRoomEntity findBySenderAndReceiver(Long senderId, Long receiverId){
+        MemberEntity findSender = memberRepository.findById(senderId).orElseThrow(
+                () -> new IllegalArgumentException("사람을 찾을 수 없습니다.")
+        );
 
-    }
+        MemberEntity findReceiver = memberRepository.findById(receiverId).orElseThrow(
+                () -> new IllegalArgumentException("사람을 찾을 수 없습니다.")
+        );
 
-    @Override
-    public void createChatRoom(int senderId, int receiverId) {
-        String senderAndReceiver;
-        if(senderId < receiverId) {
-            senderAndReceiver = senderId + "_" + receiverId;
-        } else {
-            senderAndReceiver = receiverId + "_" + senderId;
-        }
+        String senderAndReceiver = SortedStringEditor.createSortedString(findSender.getId(),findReceiver.getId());
 
-        ChatRoom chatRoom = new ChatRoom(senderAndReceiver);
-        ChatRoomEntity chatRoomEntity = new ChatRoomEntity();
-        chatRoomEntity.setSenderAndReceiver(chatRoom.getSenderAndReceiver());
-        chatRoomRepository.save(chatRoomEntity);
+        ChatRoomEntity findChatRoom = chatRoomRepository.findSenderAndReceiver(senderAndReceiver);
+
+        return findChatRoom;
     }
 }
