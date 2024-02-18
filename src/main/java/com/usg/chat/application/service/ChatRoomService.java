@@ -23,8 +23,15 @@ public class ChatRoomService implements ChatRoomUseCase {
         chatRoomRepository.save(chatRoom);
     }
 
-    @Override
-    public void createChatRoom(int senderId, int receiverId) {
 
+    @Override
+    public boolean existsBySenderAndReceiver(String senderAndReceiver) {
+        return chatRoomRepository.existsBySenderAndReceiver(senderAndReceiver);
     }
+
+    @Override
+    public Long getIdBySenderAndReceiver(String senderAndReceiver) {
+        return chatRoomRepository.getIdBySenderAndReceiver(senderAndReceiver);
+    }
+
 }
