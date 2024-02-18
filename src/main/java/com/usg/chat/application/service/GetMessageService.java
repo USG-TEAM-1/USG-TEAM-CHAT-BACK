@@ -19,7 +19,7 @@ public class GetMessageService implements GetMessageHistoryUseCase {
 
     @Override
     @Transactional
-    public List<Chat> getMessages(String senderId, String receiverId){
+    public List<Chat> getMessages(Long senderId, Long receiverId){
 
         return chatPersistencePort.getMessages(senderId, receiverId);
     }

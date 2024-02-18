@@ -18,21 +18,22 @@ public class ChatEntity {
     @Column(name ="chat_id")
     private Long id;
     private String message;     //메시지 내용
-    private String senderId;   //보내는 자 아이디
-    private String receiverId; //받는 자 아이디
+    private Long senderId;   //보내는 자 아이디
+    private Long receiverId; //받는 자 아이디
     private LocalDateTime timestamp; //시간
 
     @ManyToOne
-    private ChatRoomEntity chatroom;
+    @JoinColumn(name = "chatroom_id")
+    private ChatRoomEntity chatRoomId;
 
     @Builder
-    public ChatEntity(String message, String senderId, String receiverId,
-                      LocalDateTime timestamp/*, ChatRoomEntity chatroom*/){
+    public ChatEntity(String message, Long senderId, Long receiverId,
+                      LocalDateTime timestamp, ChatRoomEntity chatRoomId){
         this.message = message;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.timestamp = timestamp;
-        //this.chatroom = chatroom;
+        this.chatRoomId = chatRoomId;
     }
 
 }
