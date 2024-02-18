@@ -11,9 +11,9 @@ public class ChatRoom {
     public ChatRoom(String senderAndReceiver) {
         this.senderAndReceiver = senderAndReceiver;
     }
-
+    // senderAndReceiver 필드값 설정
     public void setSenderAndReceiver(Long senderId, Long receiverId) {
-        this.senderAndReceiver = senderId.toString() + receiverId.toString();
+        this.senderAndReceiver = senderId + "_" + receiverId;
     }
 
 }

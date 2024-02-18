@@ -15,7 +15,7 @@ public class ChatRoomService implements ChatRoomUseCase {
     public ChatRoomService(ChatRoomRepository chatRoomRepository) {
         this.chatRoomRepository = chatRoomRepository;
     }
-
+    // 채팅방 생성 서비스
     @Override
     public void createChatRoom(String senderAndReceiver) {
         ChatRoomEntity chatRoom = new ChatRoomEntity();
@@ -23,12 +23,12 @@ public class ChatRoomService implements ChatRoomUseCase {
         chatRoomRepository.save(chatRoom);
     }
 
-
+    // 중복 제거 서비스
     @Override
     public boolean existsBySenderAndReceiver(String senderAndReceiver) {
         return chatRoomRepository.existsBySenderAndReceiver(senderAndReceiver);
     }
-
+    // 채팅방 조회 서비스
     @Override
     public Long getIdBySenderAndReceiver(String senderAndReceiver) {
         return chatRoomRepository.getIdBySenderAndReceiver(senderAndReceiver);
