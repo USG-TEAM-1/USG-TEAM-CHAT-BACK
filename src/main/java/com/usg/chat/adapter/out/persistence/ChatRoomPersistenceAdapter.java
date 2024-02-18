@@ -13,7 +13,7 @@ public class ChatRoomPersistenceAdapter implements ChatRoomPersistencePort {
     public ChatRoomPersistenceAdapter(ChatRoomRepository chatRoomRepository) {
         this.chatRoomRepository = chatRoomRepository;
     }
-
+// 채팅방 생성 후 DB저장
     @Override
     public void createChatRoom(Long senderId, Long receiverId) {
         String senderAndReceiver = (senderId < receiverId) ? senderId + "_" + receiverId : receiverId + "_" + senderId;
@@ -28,12 +28,12 @@ public class ChatRoomPersistenceAdapter implements ChatRoomPersistencePort {
         chatRoomRepository.save(chatRoomEntity);
     }
 
-
+    // 중복제거 메서드
     @Override
     public boolean existsBySenderAndReceiver(String senderAndReceiver) {
         return chatRoomRepository.existsBySenderAndReceiver(senderAndReceiver);
     }
-
+// 채팅방 조회 메서드
     @Override
     public Long getIdBySenderAndReceiver(String senderAndReceiver) {
         ChatRoomEntity chatRoomEntity = chatRoomRepository.findBySenderAndReceiver(senderAndReceiver);
