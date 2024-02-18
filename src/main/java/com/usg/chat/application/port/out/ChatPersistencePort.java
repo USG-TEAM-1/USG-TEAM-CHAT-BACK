@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ChatPersistencePort {
     Long saveMessage(Chat chat);
-    List<Chat> getMessages(String senderId, String receiverId);
+    List<Chat> getMessages(Long senderId, Long receiverId);
 }
