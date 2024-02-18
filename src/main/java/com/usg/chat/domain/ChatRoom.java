@@ -12,7 +12,9 @@ public class ChatRoom {
         this.senderAndReceiver = senderAndReceiver;
     }
 
-    public void setSenderAndReceiver(int senderId, int receiverId) {
-        this.senderAndReceiver = senderId + "_" + receiverId;
+    public void setSenderAndReceiver(Long senderId, Long receiverId) {
+        this.senderAndReceiver = senderId.toString() + receiverId.toString();
     }
+
 }
+

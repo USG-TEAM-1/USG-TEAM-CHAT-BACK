@@ -1,8 +1,14 @@
 package com.usg.chat.application.port.in.ChatRoom;
 
+import com.usg.chat.domain.ChatRoom;
+
+import java.util.List;
+
 public interface ChatRoomUseCase {
     void createChatRoom(String senderAndReceiver);
 
-    void createChatRoom(int senderId, int receiverId);
+    boolean existsBySenderAndReceiver(String senderAndReceiver);
+    Long getIdBySenderAndReceiver(String senderAndReceiver);
 
 }
+

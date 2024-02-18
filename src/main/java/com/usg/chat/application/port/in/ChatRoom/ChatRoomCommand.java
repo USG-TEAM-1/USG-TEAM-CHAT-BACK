@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ChatRoomCommand {
-    private int senderId;
-    private int receiverId;
+    private long senderId;
+    private long receiverId;
 
-    public ChatRoomCommand(int senderId, int receiverId) {
+    public ChatRoomCommand(Long senderId, Long receiverId) {
         this.senderId = senderId;
         this.receiverId = receiverId;
     }
