@@ -1,5 +1,6 @@
 package com.usg.chat.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,13 +9,11 @@ import lombok.NoArgsConstructor;
 public class ChatRoom {
     private String senderAndReceiver;
 
+    @Builder
     public ChatRoom(String senderAndReceiver) {
         this.senderAndReceiver = senderAndReceiver;
     }
-    // senderAndReceiver 필드값 설정
-    public void setSenderAndReceiver(Long senderId, Long receiverId) {
-        this.senderAndReceiver = senderId + "_" + receiverId;
-    }
+
 
 }
 

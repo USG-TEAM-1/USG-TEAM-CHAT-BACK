@@ -4,36 +4,34 @@ import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomRepository;
 import com.usg.chat.domain.ChatRoom;
 import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomEntity;
 import com.usg.chat.application.port.out.ChatRoomPersistencePort;
+import com.usg.chat.util.SortedStringEditor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ChatRoomPersistenceAdapter implements ChatRoomPersistencePort {
     private final ChatRoomRepository chatRoomRepository;
 
-    public ChatRoomPersistenceAdapter(ChatRoomRepository chatRoomRepository) {
-        this.chatRoomRepository = chatRoomRepository;
-    }
-// 채팅방 생성 후 DB저장
+    // 채팅방 생성 후 DB저장
     @Override
-    public void createChatRoom(Long senderId, Long receiverId) {
-        String senderAndReceiver = (senderId < receiverId) ? senderId + "_" + receiverId : receiverId + "_" + senderId;
+    public Long createChatRoom(ChatRoom chatRoom) {
+        ChatRoomEntity chatRoomEntity = ChatRoomEntity.builder()
+                .senderAndReceiver(chatRoom.getSenderAndReceiver())
+                .build();
 
-        if(chatRoomRepository.existsBySenderAndReceiver(senderAndReceiver)) {
-            return;
-        }
-
-        ChatRoom chatRoom = new ChatRoom(senderAndReceiver);
-        ChatRoomEntity chatRoomEntity = new ChatRoomEntity();
-        chatRoomEntity.setSenderAndReceiver(chatRoom.getSenderAndReceiver());
-        chatRoomRepository.save(chatRoomEntity);
+        ChatRoomEntity savedChatRoomId = chatRoomRepository.save(chatRoomEntity);
+        return savedChatRoomId.getRoomId();
     }
 
-    // 중복제거 메서드
     @Override
-    public boolean existsBySenderAndReceiver(String senderAndReceiver) {
-        return chatRoomRepository.existsBySenderAndReceiver(senderAndReceiver);
+    public ChatRoomEntity findBySenderAndReceiver(Long senderId, Long receiverId){
+        //멤버 찾는게 필요할듯?
+        String senderAndReceiver = SortedStringEditor.createSortedString(senderId,receiverId);
+        ChatRoomEntity findChatRoom = chatRoomRepository.findBySenderAndReceiver(senderAndReceiver);
+        return findChatRoom;
     }
-// 채팅방 조회 메서드
+    // 채팅방 조회 메서드
     @Override
     public Long getIdBySenderAndReceiver(String senderAndReceiver) {
         ChatRoomEntity chatRoomEntity = chatRoomRepository.findBySenderAndReceiver(senderAndReceiver);

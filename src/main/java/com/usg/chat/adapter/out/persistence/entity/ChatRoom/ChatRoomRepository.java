@@ -8,9 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, Long> {
-    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM ChatRoomEntity c WHERE c.senderAndReceiver = :senderAndReceiver")
-    boolean existsBySenderAndReceiver(@Param("senderAndReceiver") String senderAndReceiver);
-
+    //변경 해야함.
     @Query("SELECT c.Id FROM ChatRoomEntity c WHERE c.senderAndReceiver = :senderAndReceiver")
     Long getIdBySenderAndReceiver(@Param("senderAndReceiver") String senderAndReceiver);
 

@@ -1,33 +1,39 @@
 package com.usg.chat.application.service;
 
+import com.usg.chat.application.port.in.ChatRoom.ChatRoomCommand;
 import com.usg.chat.application.port.in.ChatRoom.ChatRoomUseCase;
-import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomEntity;
 import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
+import com.usg.chat.application.port.out.ChatRoomPersistencePort;
+import com.usg.chat.domain.ChatRoom;
+import com.usg.chat.util.SortedStringEditor;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-@Primary
-@Service
-public class ChatRoomService implements ChatRoomUseCase {
-    private final ChatRoomRepository chatRoomRepository;
+import org.springframework.transaction.annotation.Transactional;
 
-    @Autowired
-    public ChatRoomService(ChatRoomRepository chatRoomRepository) {
-        this.chatRoomRepository = chatRoomRepository;
-    }
+@Slf4j
+@Service
+@AllArgsConstructor
+@Transactional
+public class ChatRoomService implements ChatRoomUseCase {
+    private ChatRoomPersistencePort chatRoomPersistencePort;
+    private ChatRoomRepository chatRoomRepository;
     // 채팅방 생성 서비스
     @Override
-    public void createChatRoom(String senderAndReceiver) {
-        ChatRoomEntity chatRoom = new ChatRoomEntity();
-        chatRoom.setSenderAndReceiver(senderAndReceiver);
-        chatRoomRepository.save(chatRoom);
+    @Transactional
+    public Long createChatRoom(ChatRoomCommand command) {
+        ChatRoom chat = commandToChatRoom(command);
+        Long savedChatRoomId = chatRoomPersistencePort.createChatRoom(chat);
+
+        return savedChatRoomId;
     }
 
-    // 중복 제거 서비스
-    @Override
-    public boolean existsBySenderAndReceiver(String senderAndReceiver) {
-        return chatRoomRepository.existsBySenderAndReceiver(senderAndReceiver);
+    private ChatRoom commandToChatRoom(ChatRoomCommand command){
+        return ChatRoom.builder()
+                .senderAndReceiver(SortedStringEditor.createSortedString(command.getSenderId(), command.getReceiverId()))
+                .build();
     }
+
     // 채팅방 조회 서비스
     @Override
     public Long getIdBySenderAndReceiver(String senderAndReceiver) {

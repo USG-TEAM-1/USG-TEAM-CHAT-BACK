@@ -1,5 +1,6 @@
 package com.usg.chat.adapter.out.persistence.entity.ChatRoom;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +12,6 @@ import jakarta.persistence.Id;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class ChatRoomEntity {
     @Id
@@ -21,6 +21,10 @@ public class ChatRoomEntity {
     @Column(name = "senderAndReceiver", unique = true)
     private String senderAndReceiver;
 
+    @Builder
+    public ChatRoomEntity(String senderAndReceiver){
+        this.senderAndReceiver = senderAndReceiver;
+    }
 }
 
 
