@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ChatRoomReq {
-    private String senderAndReceiver;
+    private Long opponentId;
 
 }
