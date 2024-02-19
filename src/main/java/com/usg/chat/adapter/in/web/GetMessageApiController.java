@@ -1,6 +1,7 @@
 package com.usg.chat.adapter.in.web;
 
 import com.usg.chat.adapter.in.web.dto.Result;
+import com.usg.chat.adapter.out.persistence.entity.Chat.ChatEntity;
 import com.usg.chat.application.port.in.Message.GetMessageHistoryUseCase;
 import com.usg.chat.domain.Chat;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,8 @@ public class GetMessageApiController {
     private final GetMessageHistoryUseCase getMessageHistoryUseCase;
 
     @GetMapping("/messages")
-    public ResponseEntity<Result<List<Chat>>> getMessages(@RequestParam Long senderId,
-                                                          @RequestParam Long receiverId){
+    public ResponseEntity<Result<List<ChatEntity>>> getMessages(@RequestParam Long senderId,
+                                                                @RequestParam Long receiverId){
         List<Chat> Messages = getMessageHistoryUseCase.getMessages(senderId,receiverId);
         return ResponseEntity.ok(new Result(Messages));
     }

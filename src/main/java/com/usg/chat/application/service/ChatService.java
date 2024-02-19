@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
-public class ChatService implements SaveChatUseCase  {
+public class ChatService implements SaveChatUseCase {
 
     private final ChatPersistencePort chatPersistencePort;
 
