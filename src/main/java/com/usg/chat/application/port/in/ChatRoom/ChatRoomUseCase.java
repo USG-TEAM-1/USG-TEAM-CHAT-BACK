@@ -8,7 +8,6 @@ public interface ChatRoomUseCase {
     // 채팅방 생성
     Long createChatRoom(ChatRoomCommand command);
     // 채팅방 조회
-    Long getIdBySenderAndReceiver(String senderAndReceiver);
 
 }
 
