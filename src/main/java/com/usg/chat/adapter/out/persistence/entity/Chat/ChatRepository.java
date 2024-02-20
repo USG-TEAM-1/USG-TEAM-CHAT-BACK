@@ -1,5 +1,6 @@
 package com.usg.chat.adapter.out.persistence.entity.Chat;
 
+import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

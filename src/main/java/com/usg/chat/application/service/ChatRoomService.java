@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -38,6 +39,12 @@ public class ChatRoomService implements ChatRoomUseCase , GetChatRoomsUseCase {
 
     @Override
     public List<GetChatRoomsRes> findChatRooms(Long memberId){
-    return null;
+        List<ChatRoom> chatRooms = chatRoomPersistencePort.findChatRooms(memberId);
+        return chatRooms.stream()
+                .map(chatRoom -> GetChatRoomsRes.builder()
+                        .chatRoomId(chatRoom.getChatRoomId()) // ChatRoom 객체에서 ID만 가져와서 설정
+                        .build())
+                .collect(Collectors.toList());
     }
+
 }

@@ -16,6 +16,6 @@ public interface ChatRoomPersistencePort {
 
     ChatRoomEntity findById(Long chatRoomId);
     // 채팅방 조회
-    List<ChatRoomEntity> findChatRooms(Long memberId);
+    List<ChatRoom> findChatRooms(Long memberId);
 }
 
