@@ -1,9 +1,6 @@
 package com.usg.chat.adapter.out.persistence;
 
-import com.usg.chat.adapter.in.web.dto.ChatRoomRes;
 import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomRepository;
-import com.usg.chat.application.port.in.ChatRoom.GetChatRoomsRes;
-import com.usg.chat.domain.Chat;
 import com.usg.chat.domain.ChatRoom;
 import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomEntity;
 import com.usg.chat.application.port.out.ChatRoomPersistencePort;
@@ -40,8 +37,17 @@ public class ChatRoomPersistenceAdapter implements ChatRoomPersistencePort {
 
     // 채팅방 조회 메서드
     @Override
-    public List<ChatRoomEntity> findChatRooms(Long memberId){
-        return null;//chatRoomRepository.findChatRoomsByMemberId(memberId);
+    public List<ChatRoom> findChatRooms(Long memberId){
+        List<ChatRoomEntity> chatRoomEntities = chatRoomRepository.findChatRoomsByMemberId(memberId);
+        List<ChatRoom> chatRooms = new ArrayList<>();
+        for (ChatRoomEntity entity : chatRoomEntities) {
+            ChatRoom chatRoom = new ChatRoom();
+            chatRoom.setSenderAndReceiver(entity.getSenderAndReceiver());
+            chatRoom.setChatRoomId(entity.getRoomId());
+            // 필요한 경우 다른 속성도 매핑
+            chatRooms.add(chatRoom); // 리스트에 ChatRoom 객체 추가
+        }
+        return chatRooms;
     }
 
     @Override
