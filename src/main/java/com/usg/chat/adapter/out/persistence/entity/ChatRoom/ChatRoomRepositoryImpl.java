@@ -24,8 +24,9 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
         QChatRoomEntity chatRoom = QChatRoomEntity.chatRoomEntity;
         QChatEntity chat = QChatEntity.chatEntity;
         return queryFactory
-                .selectFrom(chatRoom)
-                .join(chat).on(chat.chatRoomId.eq(chatRoom))
+                .select(chatRoom)
+                .from(chat)
+                .join(chat.chatRoomId, chatRoom)
                 .where(
                         chat.senderId.eq(memberId)
                                 .or(chat.receiverId.eq(memberId)))
