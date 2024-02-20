@@ -54,14 +54,13 @@ public class ChatRoomApiController {
         return ResponseEntity.ok(new Result(response, "채팅방을 생성하였습니다."));
     }
 
-
-    //채팅방 조회 API
+    // 채팅방 조회 API
     @GetMapping("/api/chat-rooms/")
-    @Operation(summary = "채팅방 목록 조회 *")
-    public ResponseEntity<Result<List<ChatRoomEntity>>> getchatRooms(@RequestBody Long memberId) {
-        List<GetChatRoomsRes> chatRooms = getChatRoomsUseCase.findChatRooms(memberId);
-        //리스트 형식으로 뽑아와야 할것 같음.
-        return ResponseEntity.ok(new Result(chatRooms,"채팅방 목록을 찾았습니다."));
+    @Operation(summary = "채팅방 목록 조회")
+    public ResponseEntity<Result<List<GetChatRoomsRes>>> getChatRooms(@RequestParam Long memberId) {
+        // ChatRoomEntity 대신 ChatRoomRes를 사용하여 응답 생성
+        List<GetChatRoomsRes> chatRoomResList = getChatRoomsUseCase.findChatRooms(memberId);
+        return ResponseEntity.ok(new Result<>(chatRoomResList, "채팅방 목록을 찾았습니다."));
     }
 }
 
