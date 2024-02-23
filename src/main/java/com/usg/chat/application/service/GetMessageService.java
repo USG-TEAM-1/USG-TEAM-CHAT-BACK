@@ -1,7 +1,8 @@
 package com.usg.chat.application.service;
 
-import com.usg.chat.application.port.in.Message.GetMessageHistoryUseCase;
+import com.usg.chat.application.port.in.Chat.GetMessageHistoryUseCase;
 import com.usg.chat.application.port.out.ChatPersistencePort;
+import com.usg.chat.application.port.out.MemberPersistencePort;
 import com.usg.chat.domain.Chat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +17,12 @@ import java.util.List;
 @Transactional
 public class GetMessageService implements GetMessageHistoryUseCase {
     private final ChatPersistencePort chatPersistencePort;
-
+    private final MemberPersistencePort memberPersistencePort;
     @Override
     @Transactional
-    public List<Chat> getMessages(Long senderId, Long receiverId){
-
+    public List<Chat> getMessages(String senderEmail, String receiverEmail){
+        Long senderId = memberPersistencePort.getIdByEmail(senderEmail);
+        Long receiverId = memberPersistencePort.getIdByEmail(receiverEmail);
         return chatPersistencePort.getMessages(senderId, receiverId);
     }
 }
