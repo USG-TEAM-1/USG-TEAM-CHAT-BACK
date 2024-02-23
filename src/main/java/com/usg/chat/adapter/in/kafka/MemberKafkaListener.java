@@ -29,6 +29,7 @@ public class MemberKafkaListener {
     private MemberWriteCommand publishToCommand(MemberPublishDTO memberPublishDTO) {
         return MemberWriteCommand
                 .builder()
+                .memberId(memberPublishDTO.getMemberId())
                 .email(memberPublishDTO.getEmail())
                 .nickname(memberPublishDTO.getNickname())
                 .build();

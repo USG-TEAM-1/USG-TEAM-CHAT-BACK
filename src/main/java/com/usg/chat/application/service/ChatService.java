@@ -1,8 +1,9 @@
 package com.usg.chat.application.service;
 
-import com.usg.chat.application.port.in.Message.SaveChatCommand;
-import com.usg.chat.application.port.in.Message.SaveChatUseCase;
+import com.usg.chat.application.port.in.Chat.SaveChatCommand;
+import com.usg.chat.application.port.in.Chat.SaveChatUseCase;
 import com.usg.chat.application.port.out.ChatPersistencePort;
+import com.usg.chat.application.port.out.MemberPersistencePort;
 import com.usg.chat.domain.Chat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

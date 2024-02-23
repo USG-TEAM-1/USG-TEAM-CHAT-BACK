@@ -7,12 +7,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MemberWriteCommand {
-
+    private Long memberId;
     private String email;
     private String nickname;
 
     @Builder
-    public MemberWriteCommand(String email, String nickname){
+    public MemberWriteCommand(Long memberId, String email, String nickname){
+        this.memberId = memberId;
         this.email = email;
         this.nickname = nickname;
     }
