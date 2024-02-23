@@ -1,6 +1,5 @@
-package com.usg.chat.application.port.in.Message;
+package com.usg.chat.application.port.in.Chat;
 
-import com.usg.chat.domain.ChatRoom;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

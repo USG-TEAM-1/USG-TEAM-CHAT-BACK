@@ -20,16 +20,16 @@ public class CqrsService implements MemberWriteUseCase {
     @Override
     @Transactional
     public void memberWrite(MemberWriteCommand memberWriteCommand) {
-        Member member = commendToMember(memberWriteCommand);
-
+        Member member = commandToMember(memberWriteCommand);
         memberPersistencePort.saveMember(member);
     }
 
-    private Member commendToMember(MemberWriteCommand memberWriteCommend) {
+    private Member commandToMember(MemberWriteCommand memberWriteCommand) {
         return Member
                 .builder()
-                .email(memberWriteCommend.getEmail())
-                .nickname(memberWriteCommend.getNickname())
+                .memberId(memberWriteCommand.getMemberId())
+                .email(memberWriteCommand.getEmail())
+                .nickname(memberWriteCommand.getNickname())
                 .build();
     }
 }

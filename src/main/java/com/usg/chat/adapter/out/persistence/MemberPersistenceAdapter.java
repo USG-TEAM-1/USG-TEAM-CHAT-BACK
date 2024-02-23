@@ -16,11 +16,29 @@ public class MemberPersistenceAdapter implements MemberPersistencePort {
 
     @Override
     public void saveMember(Member member) {
-        redisTemplate.opsForValue().set(RedisKeyPrefix + member.getEmail(), member.getNickname());
+        String key = RedisKeyPrefix + member.getEmail();
+        String value = member.getMemberId() + ":" + member.getNickname();
+        redisTemplate.opsForValue().set(key, value);
     }
 
     @Override
     public String getNicknameByEmail(String email) {
-        return redisTemplate.opsForValue().get(RedisKeyPrefix + email);
+        String key = RedisKeyPrefix + email;
+        String value = redisTemplate.opsForValue().get(key);
+        if (value != null) {
+            return value.split(":")[1];
+        }
+        return null;
     }
+
+    @Override
+    public Long getIdByEmail(String email) {
+        String key = RedisKeyPrefix + email;
+        String value = redisTemplate.opsForValue().get(key);
+        if (value != null) {
+            return Long.parseLong(value.split(":")[0]);
+        }
+        return null;
+    }
+
 }
