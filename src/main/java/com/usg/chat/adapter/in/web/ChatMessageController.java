@@ -2,8 +2,8 @@ package com.usg.chat.adapter.in.web;
 
 import com.usg.chat.adapter.in.web.dto.MessageDTO;
 import com.usg.chat.adapter.in.web.dto.Result;
-import com.usg.chat.application.port.in.Message.SaveChatCommand;
-import com.usg.chat.application.port.in.Message.SaveChatUseCase;
+import com.usg.chat.application.port.in.Chat.SaveChatCommand;
+import com.usg.chat.application.port.in.Chat.SaveChatUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,6 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
