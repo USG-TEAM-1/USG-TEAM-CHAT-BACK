@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ChatRoomCommand {
-    private Long senderId;
-    private Long receiverId;
+    private String senderEmail;
+    private String receiverEmail;
 
     @Builder
-    public ChatRoomCommand(Long senderId, Long receiverId) {
-        this.senderId = senderId;
-        this.receiverId = receiverId;
+    public ChatRoomCommand(String senderEmail, String receiverEmail) {
+        this.senderEmail = senderEmail;
+        this.receiverEmail = receiverEmail;
     }
 }
