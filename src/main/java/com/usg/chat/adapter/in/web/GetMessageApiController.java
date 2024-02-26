@@ -23,7 +23,7 @@ public class GetMessageApiController {
     private final GetMessageHistoryUseCase getMessageHistoryUseCase;
     private final MemberEmailGetter memberEmailGetter;
 
-    @GetMapping("api/messages")
+    @GetMapping("/api/messages")
     public ResponseEntity<Result<List<ChatEntity>>> getMessages(@RequestParam String receiverEmail,
                                                                 HttpServletRequest servletRequest){
         //로그인 한 회원 찾기
