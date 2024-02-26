@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,11 +49,28 @@ public class ChatRoomService implements ChatRoomUseCase , GetChatRoomsUseCase, F
         //로그인 한 회원 찾기
         Long memberId = memberPersistencePort.getIdByEmail(email);
         List<ChatRoom> chatRooms = chatRoomPersistencePort.findChatRooms(memberId);
-        return chatRooms.stream()
-                .map(chatRoom -> GetChatRoomsRes.builder()
-                        .chatRoomId(chatRoom.getChatRoomId()) // ChatRoom 객체에서 ID만 가져와서 설정
-                        .build())
-                .collect(Collectors.toList());
+
+        // 채팅방과 수신자 정보를 담을 리스트 초기화
+        List<GetChatRoomsRes> chatRoomsWithReceivers = new ArrayList<>();
+
+        for (ChatRoom chatRoom : chatRooms) {
+            // 채팅방의 ID를 기반으로 수신자 ID, Email, NickName 조회
+            Long receiverId = chatRoomPersistencePort.findReceiverIdByChatRoomId(chatRoom.getChatRoomId());
+            String receiverEmail = memberPersistencePort.getEmailById(receiverId);
+            String receiverNickName = memberPersistencePort.getNicknameByEmail(receiverEmail);
+
+
+            // 채팅방과 수신자 정보를 가지고 있는 객체 생성 및 결과 리스트에 추가
+            GetChatRoomsRes chatRoomWithReceiver = GetChatRoomsRes.builder()
+                    .chatRoomId(chatRoom.getChatRoomId())
+                    .opponentEmail(receiverEmail)
+                    .opponentNickName(receiverNickName)
+                    .build();
+
+            chatRoomsWithReceivers.add(chatRoomWithReceiver);
+        }
+
+        return chatRoomsWithReceivers;
     }
 
     @Override
