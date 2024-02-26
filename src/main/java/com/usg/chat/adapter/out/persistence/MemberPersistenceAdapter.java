@@ -41,4 +41,19 @@ public class MemberPersistenceAdapter implements MemberPersistencePort {
         return null;
     }
 
+    //아이디를 통해 이메일 불러옴
+    @Override
+    public String getEmailById(Long id) {
+        for (String key : redisTemplate.keys(RedisKeyPrefix + "*")) {
+            String value = redisTemplate.opsForValue().get(key);
+            if (value != null) {
+                String[] parts = value.split(":");
+                if (parts.length == 2 && Long.parseLong(parts[0]) == id) {
+                    return key.substring(RedisKeyPrefix.length());
+                }
+            }
+        }
+        return null;
+    }
+
 }
