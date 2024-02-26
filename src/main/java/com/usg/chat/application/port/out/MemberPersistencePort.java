@@ -9,4 +9,6 @@ public interface MemberPersistencePort {
     String getNicknameByEmail(String email);
 
     Long getIdByEmail(String email);
+
+    String getEmailById(Long id);
 }
