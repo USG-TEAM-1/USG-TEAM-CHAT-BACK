@@ -27,7 +27,7 @@ public class ChatRoomApiController {
     private final MemberEmailGetter memberEmailGetter;
 
     //채팅방 생성 API
-    @PostMapping("/chat-rooms")
+    @PostMapping("/api/chat-rooms")
     public ResponseEntity<Result> createChatRoom(@RequestBody ChatRoomReq request, HttpServletRequest servletRequest) {
         String senderEmail = memberEmailGetter.getMemberEmail(servletRequest.getHeader("Authorization"));
         String opponentEmail = request.getOpponentEmail();
