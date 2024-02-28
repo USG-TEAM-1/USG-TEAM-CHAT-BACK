@@ -1,11 +1,12 @@
 package com.usg.chat.adapter.in.web.dto;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatRoomRes {
     private Long chatRoomId;
     private String opponentEmail;

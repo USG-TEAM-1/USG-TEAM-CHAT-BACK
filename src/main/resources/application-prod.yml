@@ -1,16 +1,17 @@
 spring:
   datasource:
-    url: ${DATABASE}
-    username: ${USERNAME}
-    password: ${PASSWORD}
-    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.17.0.1:3306/Book
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
         show_sql: true
         format_sql: true
         default_batch_fetch_size: 100
 server:
-  port: 8080
+  port: 8081
