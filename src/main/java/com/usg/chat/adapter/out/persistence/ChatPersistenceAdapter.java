@@ -48,6 +48,7 @@ public class ChatPersistenceAdapter implements ChatPersistencePort {
                 .senderId(entity.getSenderId())
                 .receiverId(entity.getReceiverId())
                 .timestamp(entity.getTimestamp())
+                .chatRoomId(entity.getChatRoomId().getRoomId())
                 .build()).collect(Collectors.toList());
     }
 }

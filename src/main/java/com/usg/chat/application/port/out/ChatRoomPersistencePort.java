@@ -1,7 +1,6 @@
 package com.usg.chat.application.port.out;
 
 import com.usg.chat.adapter.out.persistence.entity.ChatRoom.ChatRoomEntity;
-import com.usg.chat.application.port.in.ChatRoom.GetChatRoomsRes;
 import com.usg.chat.domain.ChatRoom;
 import org.springframework.stereotype.Repository;
 
