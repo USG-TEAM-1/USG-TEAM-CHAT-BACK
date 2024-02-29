@@ -5,5 +5,5 @@ import com.usg.chat.domain.Chat;
 import java.util.List;
 
 public interface GetMessageHistoryUseCase {
-    List<Chat> getMessages(String senderEmail, String receiverEmail);
+    List<GetMessageHistoryRes> getMessages(String senderEmail, String receiverEmail);
 }
